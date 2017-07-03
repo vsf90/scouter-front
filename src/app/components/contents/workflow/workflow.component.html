@@ -75,7 +75,7 @@
 
 <!-- Modals -->
 <modal #modal>
-    <modal-header [show-close]="true">
+    <modal-header [show-close]="true" (click)="close()">
         <h4 class="modal-title">Component parameters</h4>
     </modal-header>
     <modal-body>

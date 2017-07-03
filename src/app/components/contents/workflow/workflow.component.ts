@@ -112,6 +112,7 @@ export class WorkflowComponent implements OnInit, OnDestroy {
   open(evt: any): void {
     try {
       if ( evt.target.classList[1].endsWith(ConfigApp.imageType)) {
+        console.log('case 1');
         this.apply(evt);
       }
     } catch (e) {
@@ -124,7 +125,11 @@ export class WorkflowComponent implements OnInit, OnDestroy {
         && this.componentChosen !== 'geo-location.png'
         && this.componentChosen !== 'console-sink.png'
         && this.componentChosen !== 'mongodb-sink.png' ) {
-      this.modal.open();
+      if ( this.componentChosen == '' ) {
+        console.log('Please select a component');
+      } else {
+        this.modal.open();
+      }
     } else {
       if ( this.componentChosen === 'console-sink.png' ) {
         this.ws.sendWorkFlow(this.jb.constructJson())
@@ -155,6 +160,7 @@ export class WorkflowComponent implements OnInit, OnDestroy {
 
   notify(): void {
     this.modal.close();
+    this.componentChosen = '';
   }
 
   deleteAll(): void {
@@ -172,6 +178,7 @@ export class WorkflowComponent implements OnInit, OnDestroy {
   close(): void {
     this.modal.close();
     this.modal2.close();
+    this.componentChosen = '';
   }
 
   delete(): void {
@@ -179,8 +186,7 @@ export class WorkflowComponent implements OnInit, OnDestroy {
     let type = this.ls.get(ConfigApp.localStorage.type) + '';
     type = type.replace(ConfigApp.imageType, '');
     this.ls.remove(type);
-    this.modal.close();
-    this.modal2.close();
+    this.close();
     RestoreElementService.deleteFromDrawnComponents(
       this.ls.get(ConfigApp.localStorage.type)
     );
