@@ -16,7 +16,7 @@ export class RestoreElementService {
   constructor() {
   }
 
-  draw(workflow: any): void {
+  static draw(workflow: any): void {
     RestoreElementService.dc = null;
     RestoreElementService.dc = new Array<string>();
     for (const w of workflow.workflow_components) {
@@ -26,10 +26,11 @@ export class RestoreElementService {
       $(ConfigApp.dropContainer).append(o.getToolIstanceElement());
     }
     JsPlumbSingleton.configureNodes(ConfigApp.toolEltsClass);
-    this.connectDefaultWorkflow(workflow);
+    // this.connectDefaultWorkflow(workflow);
+    RestoreElementService.connectDefaultWorkflow(workflow);
   }
 
-  private connectDefaultWorkflow( defaultWorkflow: any ) {
+  private static connectDefaultWorkflow( defaultWorkflow: any ) {
     // Iterate each component
     for ( let i = 0 ; i < defaultWorkflow.workflow_components.length ; i++ ) {
       // Read the current component information from json
@@ -49,7 +50,7 @@ export class RestoreElementService {
     }
   }
 
-private connectTwoComponents( sourceId: string, sourceType: string , targetId: string, targetType: string ){
+private static connectTwoComponents( sourceId: string, sourceType: string , targetId: string, targetType: string ){
     JsPlumbSingleton.getInstance().connect({
         source: sourceId,
         target: targetId,

@@ -32,8 +32,8 @@ import 'jquery-ui/ui/widgets/accordion';
   providers: [
     JsonBuilderService,
     LocalStorageService,
-    WorkflowService,
-    RestoreElementService
+    WorkflowService
+    // RestoreElementService
   ]
 })
 export class WorkflowComponent implements OnInit, OnDestroy {
@@ -55,13 +55,13 @@ export class WorkflowComponent implements OnInit, OnDestroy {
   constructor(
     private jb: JsonBuilderService,
     private ls: LocalStorageService,
-    private ws: WorkflowService,
-    private re: RestoreElementService
+    private ws: WorkflowService
+    // private re: RestoreElementService
   ) {
       this.ws.getDefautWorkFlow()
       .subscribe( function(resData) {
                     this.defaultWorkflow = resData;
-                    re.draw(resData);
+                    RestoreElementService.draw(resData);
                   },
                   resError => this.errorMsg = resError );
    }
@@ -93,7 +93,7 @@ export class WorkflowComponent implements OnInit, OnDestroy {
     });
     $( '#accordion' ).accordion({
       collapsible: true,
-      heightStyle: "content"
+      heightStyle: 'content'
     });
   }
 
@@ -188,8 +188,11 @@ export class WorkflowComponent implements OnInit, OnDestroy {
 
   drawDefaultWorkflow() {
     this.deleteAll();
-    console.log(this.defaultWorkflow);
-    this.re.draw(this.defaultWorkflow);
+    this.ws.getDefautWorkFlow()
+      .subscribe( function(resData) {
+        RestoreElementService.draw(resData);
+      },
+      resError => this.errorMsg = resError );
   }
 
   reverseOpenData(): void {
