@@ -26,7 +26,6 @@ export class RestoreElementService {
       $(ConfigApp.dropContainer).append(o.getToolIstanceElement());
     }
     JsPlumbSingleton.configureNodes(ConfigApp.toolEltsClass);
-    // this.connectDefaultWorkflow(workflow);
     RestoreElementService.connectDefaultWorkflow(workflow);
   }
 

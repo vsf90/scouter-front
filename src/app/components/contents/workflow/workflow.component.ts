@@ -58,13 +58,20 @@ export class WorkflowComponent implements OnInit, OnDestroy {
     private ws: WorkflowService
     // private re: RestoreElementService
   ) {
-      this.ws.getDefautWorkFlow()
-      .subscribe( function(resData) {
-                    this.defaultWorkflow = resData;
-                    RestoreElementService.draw(resData);
-                  },
-                  resError => this.errorMsg = resError );
-   }
+      // if ( this.ls.get('w') ) {
+      //   let workflow = JSON.parse(this.ls.get('w').toString(), (k, v) => {
+      //     return JSON.parse(v);
+      //   });
+      //   RestoreElementService.draw(workflow);
+      // } else {
+        this.ws.getDefautWorkFlow()
+        .subscribe( function(resData) {
+                      this.defaultWorkflow = resData;
+                      RestoreElementService.draw(resData);
+                    },
+                    resError => this.errorMsg = resError );
+      // }
+    }
 
   ngOnInit() {
   }
@@ -173,6 +180,7 @@ export class WorkflowComponent implements OnInit, OnDestroy {
     for (const e of this.ls.keys()) {
       this.ls.remove(e);
     }
+    this.ls.set('w', JSON.stringify('{"workflow_components": [{"id": "0","component_type": "Geo Location","x_position": "0px","y_position": "0px","links_to": ["2"]},{"id": "2","component_type": "Keyword List","x_position": "244px","y_position": "104px","links_to": ["3"]},{"id": "3","component_type": "Sentimental Analysis","x_position": "420px","y_position": "105px","links_to": ["4"]},{"id": "4","component_type": "Console sink","x_position": "594px","y_position": "116px","links_to": []},{"id": "5","component_type": "DBpedia","x_position": "0px","y_position": "72px","links_to": ["2"]},{"id": "6","component_type": "OWM","x_position": "0px","y_position": "131px","links_to": ["2"]},{"id": "7","component_type": "Open Agenda","x_position": "0px","y_position": "189px","links_to": ["2"]},{"id": "8","component_type": "Facebook","x_position": "0px","y_position": "261px","links_to": ["2"]}]}'));
   }
 
   close(): void {
